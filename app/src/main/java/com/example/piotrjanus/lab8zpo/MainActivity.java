@@ -22,7 +22,6 @@ import java.util.GregorianCalendar;
 public class MainActivity extends AppCompatActivity implements DatePickerListener{
 
     private Date birthDate;
-    private Button calculateButton;
     private EditText heightEditText;
     private EditText weightEditTExt;
     private Spinner genderSpinner;
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        calculateButton = findViewById(R.id.calculateButton);
         heightEditText = findViewById(R.id.heightEditText);
         weightEditTExt = findViewById(R.id.weightEditText);
         genderSpinner = findViewById(R.id.genderSpinner);
@@ -79,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerListene
 
         Date date = new Date();
         long years;
-        
+
         try {
             years = (date.getTime() - birthDate.getTime()) / 86400000 / 365;
         }catch (NullPointerException ex){

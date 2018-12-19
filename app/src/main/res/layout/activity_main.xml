@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
@@ -16,7 +15,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/height_hint"
-        android:inputType="number" />
+        android:inputType="numberDecimal" />
 
     <EditText
         android:id="@+id/weightEditText"
@@ -24,7 +23,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/weight_hint"
-        android:inputType="number" />
+        android:inputType="numberDecimal" />
 
     <LinearLayout
         android:layout_width="wrap_content"
