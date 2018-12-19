@@ -1,7 +1,6 @@
 package com.example.piotrjanus.lab8zpo;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -49,8 +49,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerListene
         hideKeyboard();
     }
 
-
-
     @Override
     public void onDatePicked(int year, int month, int day) {
         GregorianCalendar calendar = new GregorianCalendar(year,month,day);
@@ -58,21 +56,21 @@ public class MainActivity extends AppCompatActivity implements DatePickerListene
 
         birthDate = calendar.getTime();
 
-        showSnackBar(dateString);
+        showToast(dateString);
 
     }
 
     public void calculate(View view) {
         hideKeyboard();
 
-        double height = 0;
-        double weight = 0;
+        double height;
+        double weight;
 
         try {
             height = Double.parseDouble(heightEditText.getText().toString());
             weight = Double.parseDouble(weightEditTExt.getText().toString());
         }catch(NumberFormatException ex){
-            showSnackBar("Fill all text fields and choose date of birth");
+            showToast("Fill all text fields and choose date of birth");
             return;
         }
 
@@ -80,25 +78,25 @@ public class MainActivity extends AppCompatActivity implements DatePickerListene
         String method = (String) methodSpinner.getSelectedItem();
 
         Date date = new Date();
-        long years = 0;
+        long years;
+        
         try {
             years = (date.getTime() - birthDate.getTime()) / 86400000 / 365;
         }catch (NullPointerException ex){
-            showSnackBar("Please choose your birthday before calculate PPM");
+            showToast("Please choose your date of birth before calculate PPM");
             return;
         }
 
         DecimalFormat decimalFormat = new DecimalFormat("####.##");
-        resultsTextView.setText("height: "+height + " weight: "+weight+ " gender: "+ gender+ " method: "+ method +
-                " PPM: " + decimalFormat.format(PPM.getPPM(height,weight,years,method,gender))  + " Age: "+ years);
+        PPM ppm = new PPM(getApplicationContext());
 
-        Log.i("MainActivity","Age: "+years);
+        resultsTextView.setText("Height: "+height + " cm\nWeight: "+weight+ " kg\nAge: "+ years +
+                "\nPPM: " + decimalFormat.format(ppm.getPPM(height,weight,years,method,gender)) +" kcal");
+
     }
 
-    public void showSnackBar(String message){
-        Snackbar snackbar = Snackbar
-                .make(this.findViewById(R.id.mainLayout),message,Snackbar.LENGTH_LONG);
-        snackbar.show();
+    public void showToast(String message){
+        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
     }
 
     public void hideKeyboard(){
